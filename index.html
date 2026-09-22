@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phiếu khảo sát hiện trạng và nhu cầu chuyển đổi số &amp; dữ liệu - Khối Chuyên môn</title>
+<meta name="description" content="Phiếu khảo sát hiện trạng và nhu cầu chuyển đổi số & dữ liệu, dành cho Khối Chuyên môn và các Trung tâm.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23F7941D'/%3E%3C/svg%3E">
+<style>
+  /* Dùng lại đúng bảng màu và font của form trong Apps Script */
+  :root{
+    --bg:#f5f7fb;
+    --muted:#667085;
+    --line:#dfe3ea;
+  }
+
+  *{box-sizing:border-box}
+
+  html,body{
+    height:100%;
+    margin:0;
+    background:var(--bg);
+  }
+
+  body{
+    font-family:Arial,Helvetica,sans-serif;
+    color:var(--muted);
+    overflow:hidden;
+  }
+
+  .frame-wrap{
+    position:relative;
+    width:100%;
+    height:100vh;
+    height:100dvh;   /* tránh lỗi thanh địa chỉ trên mobile */
+  }
+
+  iframe{
+    display:block;
+    width:100%;
+    height:100%;
+    border:0;
+    opacity:0;
+    transition:opacity .2s ease;
+  }
+  iframe.ready{opacity:1}
+
+  @media (prefers-reduced-motion:reduce){
+    iframe{transition:none}
+  }
+
+  .loading{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    background:var(--bg);
+    font-size:14px;
+  }
+  .loading[hidden]{display:none}
+
+  .spinner{
+    width:26px;
+    height:26px;
+    border:3px solid var(--line);
+    border-top-color:#f7941d;
+    border-radius:50%;
+    animation:spin .8s linear infinite;
+  }
+
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  @media (prefers-reduced-motion:reduce){
+    .spinner{animation:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="frame-wrap">
+  <div class="loading" id="loading">
+    <div class="spinner" aria-hidden="true"></div>
+    <div>Đang tải phiếu khảo sát…</div>
+  </div>
+
+  <iframe
+    id="form-frame"
+    title="Phiếu khảo sát chuyển đổi số và dữ liệu - Khối Chuyên môn và các Trung tâm"
+    src="https://script.google.com/macros/s/AKfycbx9P4bPxb6CGT-1Oy8BLQYkP7i0npjjHFaMx8F3qKcDjXAELigRLDTuMX8vzbveThdZDQ/exec"
+    allow="clipboard-write"
+    referrerpolicy="no-referrer-when-downgrade"></iframe>
+</div>
+
+<script>
+  var frame = document.getElementById('form-frame');
+  var loading = document.getElementById('loading');
+
+  frame.addEventListener('load', function () {
+    loading.hidden = true;
+    frame.classList.add('ready');
+  });
+
+  // Dự phòng: nếu sự kiện load không bắn ra, vẫn bỏ lớp che sau 8 giây
+  setTimeout(function () {
+    loading.hidden = true;
+    frame.classList.add('ready');
+  }, 8000);
+</script>
+
+</body>
+</html>
